@@ -1,13 +1,23 @@
-import React from 'react'
-import Todo from './Todo'
+import React from 'react';
+import Todo from './Todo';
+import AddTask from './AddTask';
 
-const TodoList = () => {
-    console.log("first")
-    return (
-        <div className='todo-list'>
-            <Todo/>
-        </div>
-    )
-}
+const TodoList = ({ addTask, toggleTask, removeTask, tasks }: any) => {
+  console.log('first');
+  return (
+    <div className='todo-list'>
+      {tasks?.map((itm: any, index: any) => (
+        <Todo
+          toggleTask={toggleTask}
+          removeTask={removeTask}
+          task={itm}
+          key={index}
+        />
+      ))}
 
-export default TodoList
+      <AddTask addTask={addTask} />
+    </div>
+  );
+};
+
+export default TodoList;
