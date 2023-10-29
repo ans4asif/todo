@@ -33,6 +33,10 @@ h1 {
   font-weight: bold;
   margin-top: 0.67em;
 }
+.wrapper{
+  position: relative;
+  overflow-x: hidden;
+}
 
 .container{
   max-width: 1180px;
@@ -43,7 +47,12 @@ h1 {
     justify-content: center;
     align-items: center;
     padding: 10px 6px;
-    gap:45px
+    gap:10px;
+    flex-direction:column;
+    @media screen and (min-width:767px){
+      flex-direction:row;
+
+    }
 }
 .field{
   background: #fff;
@@ -74,14 +83,20 @@ h1 {
 }
 .todo-list {
   max-width: 500px;
+  min-height: 220px;
   max-height: 330px;
   overflow-y: auto;
   overflow-x: hidden;
-  border: 2px solid #095181;
+  border: 2px solid #eaeaea;
   padding: 10px 6px;
   border-radius: 10px;
   @media screen and (min-width:660px) {
     max-height: 500px;
+  }
+  .btn-holder{
+    display: flex;
+    align-items: center;
+    gap: 3px;
   }
 }
 
@@ -101,7 +116,11 @@ h1 {
 .todo-text {
   cursor: pointer;
 }
-
+.todo-text .category{
+  font-size: 14px;
+  color:#ccc;
+  text-transform: capitalize;
+}
 .todo-completed {
   text-decoration: line-through;
 }
@@ -171,4 +190,42 @@ justify-content: center;
 align-items: center;
 color: #363636;
 text-transform: capitalize;
+}
+.clipboard-banner{
+  max-width: 300px;
+  max-height: 35px;
+  position: fixed;
+  bottom: 30px;
+  transform: translateX(50%);
+  left: 0;
+  width: 100%;
+  background-color: rgba(0,0,0,0.6);
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  transition: opacity 0.3s ease-in-out;
+  font-size: 18px;
+}
+
+/* Track */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  background-color: #e3e1e1; /* Background color of the scrollbar track */
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 8px; /* Rounded corners of the scrollbar thumb */
+}
+
+/* On hover, hover over the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the scrollbar thumb on hover */
+}
+
+.error{
+  color:red;
+  font-size: 14px;
+  padding: 5px 6px;
 }

@@ -3,19 +3,13 @@ import './App.css';
 import TodoList from './components/TodoList';
 import Field from './components/Field';
 import { categories } from './utils/constants';
+import ClipBoardBanner from './components/ClipBoardBanner';
 
 function App() {
+  const [showCopyBanner, setShowCopyBanner] = useState(false);
+  const [copiedText, setCopiedText] = useState('');
   const [tasks, setTasks] = useState<any>([
-    {
-      text: 'Like',
-      isCompleted: false,
-      category: 'movies'
-    },
-    {
-      text: 'Comment',
-      isCompleted: false,
-      category: 'movies'
-    },
+
     {
       text: 'Subscribe',
       isCompleted: false,
@@ -27,15 +21,28 @@ function App() {
     text: '',
     category: ''
   })
-  const addTask = (text: String, category: String) => setTasks([...tasks, { text, isCompleted: false, category: category }]);
+  const handleLocalStorage = (items: any) => {
+    localStorage.setItem('tasks', JSON.stringify(items));
+
+  }
+  const addTask = (text: String, category: String) => {
+    const newTask = { text, isCompleted: false, category };
+    const updatedTasks = [...tasks, newTask];
+    setTasks(updatedTasks);
+
+    // Save the updated tasks array to local storage
+    handleLocalStorage(updatedTasks)
+  };
   const toggleTask = (index: number) => {
     const newTasks = [...tasks];
     newTasks[index].isCompleted = !newTasks[index].isCompleted;
+    handleLocalStorage(newTasks)
     setTasks(newTasks);
   };
   const removeTask = (index: any) => {
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
+    handleLocalStorage(newTasks)
     setTasks(newTasks);
   };
 
@@ -47,6 +54,22 @@ function App() {
     setSearchQuery((prev: any) => ({ ...prev, text: value }))
 
   }
+  //copy to clipboard
+  const copyToClipboard = (text: string) => {
+    // Create a temporary textarea element to hold the text
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+
+    // Select the text within the textarea
+    textarea.select();
+    document.execCommand('copy');
+    setCopiedText(text); // Set the copied text
+    setShowCopyBanner(true); // Show the banner
+
+    // Remove the textarea
+    document.body.removeChild(textarea);
+  };
   const todoTasks = useMemo(() => {
 
     let filteredTasks: any = [...tasks];
@@ -62,6 +85,13 @@ function App() {
 
     return filteredTasks;
   }, [searchQuery, tasks])
+
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
   return (
     <div className='wrapper'>
       <main>
@@ -81,9 +111,12 @@ function App() {
               toggleTask={toggleTask}
               removeTask={removeTask}
               tasks={todoTasks}
+              copyTask={copyToClipboard}
             />
           </div>
+          <ClipBoardBanner showBanner={showCopyBanner} text={copiedText} setShow={setShowCopyBanner} />
         </div>
+
       </main>
     </div>
   );

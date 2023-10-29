@@ -2,7 +2,7 @@ import React from 'react';
 import Todo from './Todo';
 import AddTask from './AddTask';
 
-const TodoList = ({ addTask, toggleTask, removeTask, tasks }: any) => {
+const TodoList = ({ addTask, toggleTask, removeTask, tasks,copyTask }: any) => {
     console.log('first');
     return (
         <div>
@@ -11,6 +11,7 @@ const TodoList = ({ addTask, toggleTask, removeTask, tasks }: any) => {
                 <Todo
                     toggleTask={toggleTask}
                     removeTask={removeTask}
+                    copyTask={copyTask}
                     task={itm}
                     id={index}
                 />
