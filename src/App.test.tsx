@@ -23,7 +23,6 @@ describe('AddTask Component', () => {
 
     fireEvent.change(inputElement, { target: { value: 'New Task' } });
     fireEvent.select(selectElement, { target: { value: 'movies' } }) ;
-    console.log({ inputElement })
     expect(inputElement.value).toBe('New Task');
     expect(selectElement.value).toBe('movies');
   });

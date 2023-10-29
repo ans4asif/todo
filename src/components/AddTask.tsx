@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { categories } from '../utils/constants';
-const AddTask = ({ addTask }: any) => {
-  const [value, setValue] = useState('');
-  const [category, setCategory] = useState('');
-  const [error, setError] = useState('');
 
-  const handleSubmit = (e: any) => {
+interface AddTaskProps {
+  addTask: (text: string, category: string) => void;
+}
+const AddTask: React.FC<AddTaskProps> = ({ addTask }) => {
+  const [value, setValue] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ value })
     if (!value) {
       setError('Please enter title')
       return false;
@@ -32,7 +35,6 @@ const AddTask = ({ addTask }: any) => {
         />
         <div>
           <select name='category' value={category} placeholder='select category' onChange={({ target: { value } }) => {
-            console.log({ value })
             setCategory(value)
           }}>
             <option value='' disabled defaultValue=''>Select Category</option>

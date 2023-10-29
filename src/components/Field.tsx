@@ -1,6 +1,19 @@
 import React from 'react';
 
-function Field({ type, onChange = () => { }, options, value, placeholder }: any) {
+interface Option {
+    value: string;
+    name: string;
+};
+interface FieldProps {
+    type: 'select' | 'text';
+    onChange?: (event: React.ChangeEvent<any>) => void;
+    options?: Option[];
+    value?: string;
+    placeholder: string;
+}
+
+
+function Field({ type, onChange = () => { }, options, value, placeholder }: FieldProps) {
     if (type === 'select') {
         return (
             <select onChange={onChange} value={value} placeholder={placeholder} className='field'>

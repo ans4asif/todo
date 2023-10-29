@@ -1,15 +1,20 @@
 import React from 'react';
+import { Task } from '../types';
+interface TodoProps {
+    toggleTask: (id: number) => void;
+    removeTask: (id: number) => void;
+    copyTask: (text: string) => void;
+    task: Task;
+    id: number;
+  }
 
-const Todo = ({ toggleTask, removeTask, task, id, copyTask }: any) => {
-    console.log({ id });
+const Todo:  React.FC<TodoProps>= ({ toggleTask, removeTask, task, id, copyTask }) => {
 
     return (
         <div className='todo'>
             <span
                 onClick={() => {
-                    console.log({ id })
                     toggleTask(id);
-                    console.log('first');
                 }}
                 className={task?.isCompleted ? 'todo-text todo-completed' : 'todo-text'}
             >
@@ -21,7 +26,6 @@ const Todo = ({ toggleTask, removeTask, task, id, copyTask }: any) => {
                 <button
                     onClick={() => {
                         removeTask(id);
-                        console.log('first');
                     }}
                 >
                     <span className='material-icons'>delete</span>
@@ -29,7 +33,6 @@ const Todo = ({ toggleTask, removeTask, task, id, copyTask }: any) => {
                 <button
                     onClick={() => {
                         copyTask(task?.text);
-                        console.log('first');
                     }}
                 >
                     <span className='material-icons'>content_copy</span>

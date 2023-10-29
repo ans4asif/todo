@@ -4,28 +4,22 @@ import TodoList from './components/TodoList';
 import Field from './components/Field';
 import { categories } from './utils/constants';
 import ClipBoardBanner from './components/ClipBoardBanner';
+import { SearchQuery, Task } from './types';
 
 function App() {
-  const [showCopyBanner, setShowCopyBanner] = useState(false);
-  const [copiedText, setCopiedText] = useState('');
-  const [tasks, setTasks] = useState<any>([
+  const [showCopyBanner, setShowCopyBanner] = useState<boolean>(false);
+  const [copiedText, setCopiedText] = useState<string>('');
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-    {
-      text: 'Subscribe',
-      isCompleted: false,
-      category: 'movies'
-    },
-  ]);
-
-  const [searchQuery, setSearchQuery] = useState<any>({
+  const [searchQuery, setSearchQuery] = useState<SearchQuery>({
     text: '',
     category: ''
   })
-  const handleLocalStorage = (items: any) => {
+  const handleLocalStorage = (items: Task[]) => {
     localStorage.setItem('tasks', JSON.stringify(items));
 
   }
-  const addTask = (text: String, category: String) => {
+  const addTask = (text: string, category: string) => {
     const newTask = { text, isCompleted: false, category };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
@@ -39,19 +33,19 @@ function App() {
     handleLocalStorage(newTasks)
     setTasks(newTasks);
   };
-  const removeTask = (index: any) => {
+  const removeTask = (index: number) => {
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
     handleLocalStorage(newTasks)
     setTasks(newTasks);
   };
 
-  const handleSearch = (type: String, value: any) => {
+  const handleSearch = (type: string, value: any) => {
     if (type === 'category') {
-      setSearchQuery((prev: any) => ({ ...prev, category: value }))
+      setSearchQuery((prev) => ({ ...prev, category: value }))
       return
     }
-    setSearchQuery((prev: any) => ({ ...prev, text: value }))
+    setSearchQuery((prev) => ({ ...prev, text: value }))
 
   }
   //copy to clipboard
@@ -72,15 +66,15 @@ function App() {
   };
   const todoTasks = useMemo(() => {
 
-    let filteredTasks: any = [...tasks];
+    let filteredTasks: Task[] = [...tasks];
 
     if (searchQuery.text) {
       const textFilter = new RegExp(searchQuery.text, 'i'); // Case-insensitive regex
-      filteredTasks = filteredTasks.filter((task: any) => textFilter.test(task.text));
+      filteredTasks = filteredTasks.filter((task: Task) => textFilter.test(task.text));
     }
 
-    if (searchQuery.category) {
-      filteredTasks = filteredTasks.filter((task: any) => task.category === searchQuery.category);
+    if (searchQuery.category && searchQuery?.category !== 'All') {
+      filteredTasks = filteredTasks.filter((task: Task) => task.category === searchQuery.category);
     }
 
     return filteredTasks;
@@ -99,10 +93,10 @@ function App() {
           <div className='heading'><h1> TODO LIST</h1></div>
           <div className='search-fields'>
             <div className='d'>
-              <Field type='text' placeholder="Search Todo" onChange={({ target: { value } }: any) => { handleSearch('text', value) }} />
+              <Field type='text' placeholder="Search Todo" onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => { handleSearch('text', value) }} />
             </div>
             <div className='d'>
-              <Field type='select' placeholder="Select Category" options={[{ name: 'Select Category', value: '' }, ...categories,]} value={searchQuery.category} onChange={({ target: { value } }: any) => { handleSearch('category', value) }} />
+              <Field type='select' placeholder="Select Category" options={[{ name: 'Select Category', value: '' }, { name: 'All', value: 'All' }, ...categories,]} value={searchQuery.category} onChange={({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => { handleSearch('category', value) }} />
             </div>
           </div>
           <div className='list-wrapper'>

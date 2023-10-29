@@ -1,7 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 
-function ClipBoardBanner({ showBanner, text, setShow }: any) {
-    const [isVisible, setIsVisible] = useState(false);
+interface ClipBoardBannerProps {
+    showBanner: boolean;
+    text: string;
+    setShow: (show: boolean) => void;
+  }
+
+function ClipBoardBanner({ showBanner, text, setShow }: ClipBoardBannerProps) {
+    const [isVisible, setIsVisible] = useState<boolean>(false);
 
     useEffect(() => {
         if (showBanner) {
