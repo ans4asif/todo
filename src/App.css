@@ -34,14 +34,55 @@ h1 {
   margin-top: 0.67em;
 }
 
+.container{
+  max-width: 1180px;
+  padding: 10px 8px;
+}
+.search-fields{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 6px;
+    gap:45px
+}
+.field{
+  background: #fff;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  padding: 14px 10px;
+  font-size: 0.5em;
+  color: #000;
+  outline: 0;
+  border: 0;
+  border-left: 1px solid #ccc;
+  border-radius: 8px;
+  
+}
+.search-fields select{
+  background: #fff;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  padding: 14px 10px;
+  font-size: 0.5em;
+  color: #000;
+  outline: 0;
+  border: 0;
+  border-left: 1px solid #ccc;
+}
 .list-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .todo-list {
-  padding-top: 10px;
-  width: 400px;
+  max-width: 500px;
+  max-height: 330px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 2px solid #095181;
+  padding: 10px 6px;
+  border-radius: 10px;
+  @media screen and (min-width:660px) {
+    max-height: 500px;
+  }
 }
 
 .todo {
@@ -105,4 +146,29 @@ form button {
   border-left: 1px solid #ccc;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
   padding: 0 15px;
+  &:hover{
+    background-color: #2980b9;
+    color:#fff
+  }
+}
+
+form select{
+  background: #fff;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  padding: 14px 10px;
+  font-size: 0.5em;
+  color: #000;
+  outline: 0;
+  border: 0;
+  border-left: 1px solid #ccc;
+  flex: 1 1;
+}
+
+
+.no-record{
+  display: flex;
+justify-content: center;
+align-items: center;
+color: #363636;
+text-transform: capitalize;
 }

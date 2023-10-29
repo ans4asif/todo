@@ -3,21 +3,28 @@ import Todo from './Todo';
 import AddTask from './AddTask';
 
 const TodoList = ({ addTask, toggleTask, removeTask, tasks }: any) => {
-  console.log('first');
-  return (
-    <div className='todo-list'>
-      {tasks?.map((itm: any, index: any) => (
-        <Todo
-          toggleTask={toggleTask}
-          removeTask={removeTask}
-          task={itm}
-          key={index}
-        />
-      ))}
+    console.log('first');
+    return (
+        <div>
+        <div className='todo-list'>
+            {tasks?.length ? tasks?.map((itm: any, index: any) => (
+                <Todo
+                    toggleTask={toggleTask}
+                    removeTask={removeTask}
+                    task={itm}
+                    id={index}
+                />
+            )) : (
+                <div className='no-record'>
+                    <p>No tasks found</p>
+                </div>
+            )}
 
-      <AddTask addTask={addTask} />
-    </div>
-  );
+        </div>
+            <AddTask addTask={addTask} />
+
+        </div>
+    );
 };
 
 export default TodoList;
