@@ -12,47 +12,56 @@ const AddTask: React.FC<AddTaskProps> = ({ addTask }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!value) {
-      setError('Please enter title')
+      setError('Please enter title');
       return false;
     }
     if (!category) {
-      setError('Please select category')
-      return false
+      setError('Please select category');
+      return false;
     }
     value && category && addTask(value, category);
     setValue('');
-    setCategory('')
+    setCategory('');
     setError('');
   };
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='form-holder'>
         <input
           type='text'
           value={value}
           placeholder='Enter a title for this task…'
           onChange={(e) => setValue(e.target.value)}
         />
-        <div>
-          <select name='category' value={category} placeholder='select category' onChange={({ target: { value } }) => {
-            setCategory(value)
-          }}>
-            <option value='' disabled defaultValue=''>Select Category</option>
+        <div className='slecet-wrap'>
+          <select
+            name='category'
+            value={category}
+            placeholder='select category'
+            onChange={({ target: { value } }) => {
+              setCategory(value);
+            }}
+          >
+            <option value='' disabled defaultValue=''>
+              Select Category
+            </option>
 
             {categories?.map((option: any) => (
               <option key={option.value} value={option.value}>
                 {option.name}
               </option>
             ))}
-
           </select>
+          <button type='submit'>
+            <span className='material-icons'>add</span>
+          </button>
         </div>
-        <button type='submit'>
-          <span className='material-icons'>add</span>
-
-        </button>
       </form>
-      {error && <div className='error'><p>{error}</p></div>}
+      {error && (
+        <div className='error'>
+          <p>{error}</p>
+        </div>
+      )}
     </>
   );
 };

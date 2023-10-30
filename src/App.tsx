@@ -92,10 +92,10 @@ function App() {
         <div className='container'>
           <div className='heading'><h1> TODO LIST</h1></div>
           <div className='search-fields'>
-            <div className='d'>
+            <div className="column">
               <Field type='text' placeholder="Search Todo" onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => { handleSearch('text', value) }} />
             </div>
-            <div className='d'>
+            <div className="column">
               <Field type='select' placeholder="Select Category" options={[{ name: 'Select Category', value: '' }, { name: 'All', value: 'All' }, ...categories,]} value={searchQuery.category} onChange={({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => { handleSearch('category', value) }} />
             </div>
           </div>
